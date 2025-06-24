@@ -995,6 +995,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'custom.plugins.noice',
   require 'custom.plugins.nvim-tree',
   require 'custom.plugins.wakatime',
   require 'custom.plugins.barbar',
