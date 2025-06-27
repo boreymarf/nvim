@@ -29,10 +29,7 @@ return {
       week_header = {
         enable = true,
       },
-      footer = {
-        '',
-        'TWO TRUCKS HAVING SEX, TWO TRUCKS HAVING SEX',
-      },
+      footer = require('splashes').random_spash(),
     },
   },
   dependencies = { { 'nvim-tree/nvim-web-devicons' } },
