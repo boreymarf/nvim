@@ -9,6 +9,9 @@ return {
         filetypes = { 'dashboard' }, -- Only add your custom filetype
         -- (Plugin will still use its OTHER default exclusions)
       },
+      indent = {
+        tab_char = '▎',
+      },
     },
   },
 }
