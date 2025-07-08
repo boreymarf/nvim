@@ -37,10 +37,10 @@ require('lazy').setup({
   require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.neo-tree',
 
   require 'custom.plugins.trouble',
-  require 'custom.plugins.nvim-tree',
+  -- require 'custom.plugins.nvim-tree',
   require 'custom.plugins.dashboard-nvim',
   require 'custom.plugins.barbar',
   require 'custom.plugins.lualine',
