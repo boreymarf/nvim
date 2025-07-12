@@ -45,6 +45,9 @@ require('lazy').setup({
   require 'custom.plugins.barbar',
   require 'custom.plugins.lualine',
   require 'custom.plugins.checkmate-nvim',
+  require 'custom.plugins.noice',
+  require 'custom.plugins.luasnip',
+  require 'custom.plugins.friendly-snippets',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.

@@ -8,8 +8,17 @@ return {
       component_separators = { left = '', right = '' },
       section_separators = { left = '', right = '' },
       disabled_filetypes = {
-        statusline = {},
-        winbar = {},
+        statusline = {
+          'dashboard',
+          'neo-tree',
+          'dapui_scopes',
+          'dapui_breakpoints',
+          'dapui_stacks',
+          'dapui_watches',
+          'dap-repl',
+          'dapui_console',
+        },
+        winbar = { 'dashboard' },
       },
       ignore_focus = {},
       always_divide_middle = true,
@@ -45,8 +54,8 @@ return {
       --   color = { fg = '#ff9e64' },
       -- },
       lualine_x = {
-        'lsp_status',
         {
+          -- Shows marcos recording if noice is active
           function()
             if package.loaded['noice'] then
               return require('noice').api.status.mode.get()
@@ -58,6 +67,7 @@ return {
           end,
           color = { fg = '#ff9e64' },
         },
+        'lsp_status',
       },
       lualine_y = { 'progress' },
       lualine_z = { 'location' },

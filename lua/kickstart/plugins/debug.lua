@@ -23,6 +23,7 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    'mfussenegger/nvim-dap-python',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -95,6 +96,7 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'debugpy', -- Debug server for python
       },
     }
 
@@ -144,5 +146,64 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
+
+    -- NOTE: This code is written by Deepseek, so it may be trash
+    local function find_venv_python()
+      local cwd = vim.fn.getcwd()
+      local candidates = {
+        cwd .. '/.venv/bin/python', -- Unix-like systems
+        cwd .. '/venv/bin/python', -- Alternative Unix
+        cwd .. '/env/bin/python', -- Another alternative
+        cwd .. '/.venv/Scripts/python.exe', -- Windows
+      }
+
+      -- Check parent directories (up to 3 levels up)
+      for i = 1, 3 do
+        local parent = vim.fn.fnamemodify(cwd, ':h' .. string.rep(':h', i))
+        table.insert(candidates, parent .. '/.venv/bin/python')
+        table.insert(candidates, parent .. '/venv/bin/python')
+        table.insert(candidates, parent .. '/env/bin/python')
+        table.insert(candidates, parent .. '/.venv/Scripts/python.exe')
+      end
+
+      for _, path in ipairs(candidates) do
+        if vim.fn.filereadable(path) == 1 and vim.fn.executable(path) == 1 then
+          return path
+        end
+      end
+
+      return 'python3' -- Fallback to global Python
+    end
+
+    -- Configure dap-python with dynamic venv detection
+    local python_path = find_venv_python()
+    require('dap-python').setup(python_path)
+
+    -- Update debug configurations to use the detected Python path
+    dap.configurations.python = dap.configurations.python or {}
+    for _, config in ipairs(dap.configurations.python) do
+      config.pythonPath = function()
+        return find_venv_python()
+      end
+    end
+
+    -- Add a new configuration that uses the dynamic path
+    table.insert(dap.configurations.python, {
+      type = 'python',
+      request = 'launch',
+      name = 'Python: Dynamic Venv',
+      program = '${file}',
+      pythonPath = function()
+        return find_venv_python()
+      end,
+    })
+
+    -- Print debug information on startup
+    vim.schedule(function()
+      local current_python = find_venv_python()
+      local debugpy_version = vim.fn.system(current_python .. ' -m debugpy --version 2>&1')
+      print('[dap-python] Using: ' .. current_python)
+      print('[dap-python] debugpy version: ' .. debugpy_version)
+    end)
   end,
 }
