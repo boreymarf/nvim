@@ -56,4 +56,7 @@ vim.keymap.set('n', '<Tab>', '<Cmd>BufferNext<CR>', { noremap = true, silent = t
 vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<left>', '<Cmd>BufferMovePrevious<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<right>', '<Cmd>BufferMoveNext<CR>', { noremap = true, silent = true })
+
+vim.keymap.set('n', '<A-c>', '<Cmd>BufferClose<CR>', { noremap = true, silent = true })
+
 -- vim: ts=2 sts=2 sw=2 et
