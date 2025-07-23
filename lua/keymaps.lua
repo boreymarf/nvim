@@ -57,3 +57,11 @@ vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', { noremap = true, sile
 vim.keymap.set('n', '<left>', '<Cmd>BufferMovePrevious<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<right>', '<Cmd>BufferMoveNext<CR>', { noremap = true, silent = true })
 -- vim: ts=2 sts=2 sw=2 et
+
+-- Used for cord
+vim.keymap.set('n', '<leader>Ct', function()
+  require('cord.api.command').toggle_presence()
+end, { desc = 'Toggle Discord presence' })
+vim.keymap.set('n', '<leader>Ci', function()
+  require('cord.api.command').toggle_idle_force()
+end, { desc = 'Toggle Discord force idle' })
