@@ -256,6 +256,9 @@ return {
         'black',
         -- 'ruff',
         'markdownlint',
+        'ts_ls',
+        'vue_ls',
+        'cssls',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
