@@ -68,3 +68,26 @@ end, { desc = 'Toggle Discord presence' })
 vim.keymap.set('n', '<leader>Ci', function()
   require('cord.api.command').toggle_idle_force()
 end, { desc = 'Toggle Discord force idle' })
+
+local ls = require 'luasnip'
+
+-- Jumps forward in the snippet instead of TAB
+vim.keymap.set({ 'i', 's' }, '<c-k>', function()
+  if ls.expand_or_jumpable() then
+    ls.expand_or_jump()
+  end
+end, { silent = true })
+
+-- reload snippets
+vim.keymap.set('n', '<leader><leader>r', function()
+  require('luasnip.loaders.from_lua').load { paths = { '~/.config/nvim/snippets/' } }
+  print 'Snippets reloaded!'
+end)
+-- also reload on writing snippets file
+vim.api.nvim_create_autocmd('BufWritePost', {
+  pattern = '~/.config/nvim/snippets/*.lua',
+  callback = function()
+    require('luasnip.loaders.from_lua').load { paths = { '~/.config/nvim/snippets/' } }
+    print 'Snippets reloaded automatically!'
+  end,
+})

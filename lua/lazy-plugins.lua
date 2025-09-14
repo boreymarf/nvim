@@ -50,6 +50,7 @@ require('lazy').setup({
   require 'custom.plugins.friendly-snippets',
   require 'custom.plugins.wakatime',
   require 'custom.plugins.cord',
+  -- require 'custom.plugins.orgmode',
 
   -- require 'custom.plugins.minty',
   require 'custom.plugins.nvim-colorizer',
