@@ -78,4 +78,19 @@ func (r *{}) createTable() error {{
       }
     )
   ),
+
+  -- Transaction
+  s(
+    'transaction',
+    fmt(
+      [[
+tx, err := s.db.BeginTx(ctx, nil)
+if err != nil {{
+    return fmt.Errorf("failed to begin transaction: %w", err)
+}}
+defer tx.Rollback()
+    ]],
+      {}
+    )
+  ),
 }
