@@ -38,6 +38,7 @@ require('lazy').setup({
   require 'plugins.venv-selector',
   -- require 'plugins.minty',
   require 'plugins.nvim-colorizer',
+  require 'plugins.flash-nvim',
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
