@@ -220,40 +220,6 @@ return {
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
-
-        -- vtsls = {
-        --   settings = {
-        --     vtsls = {
-        --       tsserver = {
-        --         globalPlugins = {
-        --           {
-        --             name = '@vue/typescript-plugin',
-        --             location = vim.fn.expand '$MASON/packages' .. '/vue-language-server' .. '/node_modules/@vue/language-server',
-        --             languages = { 'vue' },
-        --             configNamespace = 'typescript',
-        --           },
-        --         },
-        --       },
-        --     },
-        --   },
-        --   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-        -- },
-        -- vue_ls = {},
-
-        -- lua_ls = {
-        --   -- cmd = { ... },
-        --   -- filetypes = { ... },
-        --   -- capabilities = {},
-        --   settings = {
-        --     Lua = {
-        --       completion = {
-        --         callSnippet = 'Replace',
-        --       },
-        --       -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-        --       -- diagnostics = { disable = { 'missing-fields' } },
-        --     },
-        --   },
-        -- },
       }
 
       -- Ensure the servers and tools above are installed
@@ -274,7 +240,7 @@ return {
         'stylua', -- Used to format Lua code
         'black',
         -- 'ruff',
-        'markdownlint',
+        -- 'markdownlint',
         -- 'ts_ls',
         'vue_ls',
         'cssls',
@@ -297,8 +263,7 @@ return {
         },
       }
 
-      -- TEMPORARY VUE_LANGUAGE_SERVER INSTALLATION
-      local vue_language_server_path = '/path/to/@vue/language-server'
+      local vue_language_server_path = vim.fn.expand '$MASON/packages' .. '/vue-language-server' .. '/node_modules/@vue/language-server'
       local tsserver_filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' }
       local vue_plugin = {
         name = '@vue/typescript-plugin',
@@ -328,9 +293,6 @@ return {
         filetypes = tsserver_filetypes,
       }
 
-      -- If you are on most recent `nvim-lspconfig`
-      local vue_ls_config = {}
-      -- If you are not on most recent `nvim-lspconfig` or you want to override
       local vue_ls_config = {
         on_init = function(client)
           client.handlers['tsserver/request'] = function(_, result, context)
@@ -368,11 +330,12 @@ return {
           end
         end,
       }
-      -- nvim 0.11 or above
+
       vim.lsp.config('vtsls', vtsls_config)
       vim.lsp.config('vue_ls', vue_ls_config)
-      vim.lsp.config('ts_ls', ts_ls_config)
       vim.lsp.enable { 'vtsls', 'vue_ls' } -- If using `ts_ls` replace `vtsls` to `ts_ls`
+
+      -- If you are on most recent `nvim-lspconfig`
     end,
   },
 }
