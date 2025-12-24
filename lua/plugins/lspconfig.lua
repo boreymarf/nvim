@@ -208,9 +208,6 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
-        gopls = {},
-        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -220,6 +217,66 @@ return {
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
+
+        -- Add Vue and TypeScript LSP configurations here:
+        vtsls = {
+          settings = {
+            vtsls = {
+              tsserver = {
+                globalPlugins = {
+                  {
+                    name = '@vue/typescript-plugin',
+                    location = vim.fn.stdpath 'data' .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+                    languages = { 'vue' },
+                    configNamespace = 'typescript',
+                  },
+                },
+              },
+            },
+          },
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+        },
+
+        vue_ls = {
+          -- on_init = function(client)
+          --   client.handlers['tsserver/request'] = function(_, result, context)
+          --     local ts_clients = vim.lsp.get_clients { bufnr = context.bufnr, name = 'ts_ls' }
+          --     local vtsls_clients = vim.lsp.get_clients { bufnr = context.bufnr, name = 'vtsls' }
+          --     local clients = {}
+          --
+          --     vim.list_extend(clients, ts_clients)
+          --     vim.list_extend(clients, vtsls_clients)
+          --
+          --     if #clients == 0 then
+          --       vim.notify('Could not find `vtsls` or `ts_ls` lsp client, `vue_ls` would not work without it.', vim.log.levels.ERROR)
+          --       return
+          --     end
+          --     local ts_client = clients[1]
+          --
+          --     local param = unpack(result)
+          --     local id, command, payload = unpack(param)
+          --     ts_client:exec_cmd({
+          --       title = 'vue_request_forward',
+          --       command = 'typescript.tsserverRequest',
+          --       arguments = {
+          --         command,
+          --         payload,
+          --       },
+          --     }, { bufnr = context.bufnr }, function(_, r)
+          --       local response = r and r.body
+          --       -- TODO: handle error or response nil here, e.g. logging
+          --       -- NOTE: Do NOT return if there's an error or no response, just return nil back to the vue_ls to prevent memory leak
+          --       local response_data = { { id, response } }
+          --
+          --       ---@diagnostic disable-next-line: param-type-mismatch
+          --       client:notify('tsserver/response', response_data)
+          --     end)
+          --   end
+          -- end,
+        },
+
+        -- Also add cssls for Vue support
+        cssls = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -279,15 +336,6 @@ return {
                 vue_plugin,
               },
             },
-          },
-        },
-        filetypes = tsserver_filetypes,
-      }
-
-      local ts_ls_config = {
-        init_options = {
-          plugins = {
-            vue_plugin,
           },
         },
         filetypes = tsserver_filetypes,
