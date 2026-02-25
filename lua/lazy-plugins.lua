@@ -24,7 +24,6 @@ require('lazy').setup({
   require 'plugins.autopairs',
   require 'plugins.neo-tree',
   require 'plugins.trouble',
-  -- require 'plugins.nvim-tree',
   require 'plugins.dashboard-nvim',
   require 'plugins.barbar',
   require 'plugins.lualine',
@@ -34,11 +33,8 @@ require('lazy').setup({
   require 'plugins.friendly-snippets',
   require 'plugins.wakatime',
   require 'plugins.cord',
-  -- require 'plugins.orgmode',
   require 'plugins.venv-selector',
-  -- require 'plugins.minty',
   require 'plugins.nvim-colorizer',
-  require 'plugins.flash-nvim',
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
